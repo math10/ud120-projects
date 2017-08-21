@@ -3,7 +3,7 @@
 import matplotlib.pyplot as plt
 from prep_terrain_data import makeTerrainData
 from class_vis import prettyPicture
-
+from sklearn.ensemble import RandomForestClassifier
 features_train, labels_train, features_test, labels_test = makeTerrainData()
 
 
@@ -24,7 +24,7 @@ plt.scatter(grade_slow, bumpy_slow, color = "r", label="slow")
 plt.legend()
 plt.xlabel("bumpiness")
 plt.ylabel("grade")
-plt.show()
+#plt.show()
 ################################################################################
 
 
@@ -32,11 +32,12 @@ plt.show()
 ### visualization code (prettyPicture) to show you the decision boundary
 
 
-
-
-
-
-
+parameters = {'bootstrap': False, 'min_samples_leaf': 20, 'n_estimators': 50, 
+                  'min_samples_split': 2, 'max_features': 'sqrt', 'max_depth': 6}
+    
+clf = RandomForestClassifier(**parameters)
+clf.fit(features_train, labels_train);
+print(clf.score(features_test, labels_test))
 
 try:
     prettyPicture(clf, features_test, labels_test)
