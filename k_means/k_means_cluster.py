@@ -12,6 +12,7 @@ import numpy
 import matplotlib.pyplot as plt
 import sys
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import MinMaxScaler
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
 
@@ -55,16 +56,9 @@ features_list = [poi, feature_1, feature_2, feature_3]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
 
-list_1 = list(map((lambda x: x[0]), finance_features))
-maxS = max(list_1)
-minS = min(list_1)
-
-list_2 = list(map((lambda x: x[1]), finance_features))
-maxE = max(list_2)
-minE = min(list_2)
-
-finance_features = list(map((lambda x: [(x[0] - minS)/(maxS - minS), (x[1] - minE)/(maxE - minE), x[2]]), finance_features))
-
+scaler = MinMaxScaler()
+finance_features = scaler.fit_transform(finance_features)
+print(scaler.transform(numpy.array([[200000., 1000000., 0.0]])))
 ### in the "clustering with 3 features" part of the mini-project,
 ### you'll want to change this line to 
 ### for f1, f2, _ in finance_features:
