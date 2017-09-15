@@ -4,7 +4,8 @@ import random
 import numpy
 import matplotlib.pyplot as plt
 import pickle
-
+from sklearn import linear_model
+from sklearn.metrics import mean_squared_error, r2_score
 from outlier_cleaner import outlierCleaner
 
 
@@ -28,7 +29,12 @@ ages_train, ages_test, net_worths_train, net_worths_test = train_test_split(ages
 
 
 
-
+reg = linear_model.LinearRegression()
+reg.fit(ages_train, net_worths_train)
+print(reg.coef_)
+print(reg.intercept_)
+print(reg.score(ages_train, net_worths_train))
+print(reg.score(ages_test, net_worths_test))
 
 
 
@@ -41,7 +47,7 @@ try:
 except NameError:
     pass
 plt.scatter(ages, net_worths)
-plt.show()
+#plt.show()
 
 
 ### identify and remove the most outlier-y points
@@ -61,13 +67,15 @@ except NameError:
 
 ### only run this code if cleaned_data is returning data
 if len(cleaned_data) > 0:
-    ages, net_worths, errors = zip(*cleaned_data)
+    ages, net_worths, errors, i = zip(*cleaned_data)
     ages       = numpy.reshape( numpy.array(ages), (len(ages), 1))
     net_worths = numpy.reshape( numpy.array(net_worths), (len(net_worths), 1))
 
     ### refit your cleaned data!
     try:
         reg.fit(ages, net_worths)
+        print(reg.coef_)
+        print(reg.score(ages_test, net_worths_test))
         plt.plot(ages, reg.predict(ages), color="blue")
     except NameError:
         print "you don't seem to have regression imported/created,"
