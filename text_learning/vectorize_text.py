@@ -54,7 +54,7 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             lst = tmp.split(" ")
             tmp = []
             for x in lst:
-                if len(x) != 0 and stopWords.contain(x):
+                if len(x) != 0 and (x not in stopWords):
                     tmp.append(x)
             word_data.append(tmp)
             ### append the text to word_data

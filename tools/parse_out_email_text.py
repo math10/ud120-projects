@@ -27,27 +27,26 @@ def parseOutText(f):
     if len(content) > 1:
         ### remove punctuation
         text_string = content[1].translate(string.maketrans("", ""), string.punctuation)
-
         ### project part 2: comment out the line below
         #words = text_string
-        lst = text_string.split(" ")
-        lst = lst.remove("")
+        text_string = text_string.replace("\t"," ");
+        text_string = text_string.replace("\n"," ");
+        tmplst = text_string.split(" ")
+        lst = []
+        for x in tmplst:
+            if len(x) > 0:
+                lst.append(x)
         lst = list(map(lambda x : stemmer.stem(x), lst))
         words = " ".join(lst)
         ### split the text string into individual words, stem each word,
         ### and append the stemmed word to words (make sure there's a single
         ### space between each stemmed word)
-        
-
-
-
-
     return words
 
     
 
 def main():
-    ff = open("../text_learning/test_email.txt", "r")
+    ff = open("../maildir/jones-t/all_documents/9808", "r")
     text = parseOutText(ff)
     print text
 
