@@ -11,6 +11,7 @@ import pickle
 import numpy
 import matplotlib.pyplot as plt
 import sys
+from ntlk.corpus import stopwords
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
 sys.path.append("../tools/")

@@ -19,6 +19,7 @@ def parseOutText(f):
 
     f.seek(0)  ### go back to beginning of file (annoying)
     all_text = f.read()
+    stemmer = SnowballStemmer("english")
 
     ### split off metadata
     content = all_text.split("X-FileName:")
@@ -28,8 +29,11 @@ def parseOutText(f):
         text_string = content[1].translate(string.maketrans("", ""), string.punctuation)
 
         ### project part 2: comment out the line below
-        words = text_string
-
+        #words = text_string
+        lst = text_string.split(" ")
+        lst = lst.remove("")
+        lst = list(map(lambda x : stemmer.stem(x), lst))
+        words = " ".join(lst)
         ### split the text string into individual words, stem each word,
         ### and append the stemmed word to words (make sure there's a single
         ### space between each stemmed word)
